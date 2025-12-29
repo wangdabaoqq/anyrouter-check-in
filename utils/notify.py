@@ -61,9 +61,9 @@ class NotificationKit:
 			
 	def send_wx_push(self, title: str, content: str):
 		if not self.wx_push_token:
-			raise ValueError('WX Push key not configured')
-			data = {'title': title, 'content': content}
-			headers = {
+				raise ValueError('WX Push key not configured')
+		data = {'title': title, 'content': content}
+		headers = {
 		  "Authorization": self.wx_push_token,
   			"Content-Type": "application/json"
 		}
