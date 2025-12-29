@@ -380,7 +380,6 @@ async def main():
 		notify.push_message('AnyRouter Check-in Alert', notify_content, msg_type='text')
 		print('[NOTIFY] Notification sent due to failures or balance changes')
 	else:
-		notify.push_message('AnyRouter Check-in Alert', '未发生变化', msg_type='text')
 		print('[INFO] All accounts successful and no balance changes detected, notification skipped')
 
 	# 设置退出码
