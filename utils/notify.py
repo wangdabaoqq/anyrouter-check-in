@@ -59,7 +59,7 @@ class NotificationKit:
 		with httpx.Client(timeout=30.0) as client:
 			client.post(f'https://sctapi.ftqq.com/{self.server_push_key}.send',  json=data)
 			
-	def wx_push(self, title: str, content: str):
+	def send_wx_push(self, title: str, content: str):
 		if not self.wx_push_token:
 			raise ValueError('WX Push key not configured')
 			data = {'title': title, 'content': content}
@@ -141,6 +141,7 @@ class NotificationKit:
 			('WeChat Work', lambda: self.send_wecom(title, content)),
 			('Gotify', lambda: self.send_gotify(title, content)),
 			('Telegram', lambda: self.send_telegram(title, content)),
+			('WxPush', lambda: self.send_wx_push(title, content)),
 		]
 
 		for name, func in notifications:
