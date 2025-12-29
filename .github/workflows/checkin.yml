@@ -87,6 +87,7 @@ jobs:
         GOTIFY_URL: ${{ secrets.GOTIFY_URL }}
         GOTIFY_TOKEN: ${{ secrets.GOTIFY_TOKEN }}
         GOTIFY_PRIORITY: ${{ secrets.GOTIFY_PRIORITY }}
+        WX_PUSH_TOKEN: ${{ secrets.WX_PUSH_TOKEN }}
       run: |
         uv run checkin.py
 
