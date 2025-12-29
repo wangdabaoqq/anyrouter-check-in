@@ -23,6 +23,8 @@ class NotificationKit:
 		self.gotify_priority = int(gotify_priority_env) if gotify_priority_env.strip() else 9
 		self.telegram_bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
 		self.telegram_chat_id = os.getenv('TELEGRAM_CHAT_ID')
+		self.wx_push_token = os.getenv('WX_PUSH_TOKEN')
+		
 
 	def send_email(self, title: str, content: str, msg_type: Literal['text', 'html'] = 'text'):
 		if not self.email_user or not self.email_pass or not self.email_to:
@@ -53,9 +55,22 @@ class NotificationKit:
 			raise ValueError('Server Push key not configured')
 
 		data = {'title': title, 'desp': content}
-		with httpx.Client(timeout=30.0) as client:
-			client.post(f'https://sctapi.ftqq.com/{self.server_push_key}.send', json=data)
 
+		with httpx.Client(timeout=30.0) as client:
+			client.post(f'https://sctapi.ftqq.com/{self.server_push_key}.send',  json=data)
+			
+	def wx_push(self, title: str, content: str):
+		if not self.wx_push_token:
+			raise ValueError('WX Push key not configured')
+			data = {'title': title, 'content': content}
+			headers = {
+		  "Authorization": self.wx_push_token,
+  			"Content-Type": "application/json"
+		}
+		
+		with httpx.Client(timeout=30.0)	as client:
+			client.post(f'https://wxpush.940703.xyz/wxsend', headers=headers, json=data)
+			
 	def send_dingtalk(self, title: str, content: str):
 		if not self.dingding_webhook:
 			raise ValueError('DingTalk Webhook not configured')
